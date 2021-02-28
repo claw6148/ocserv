@@ -2481,7 +2481,7 @@ static int parse_data(struct worker_st *ws, uint8_t *buf, size_t buf_size,
 		if (plain_size > 0 && plain[0] == 0xb0) {
 			exit_worker_reason(ws, REASON_USER_DISCONNECT);
 		} else {
-			if (plain_size > 0) {
+			if (plain_size > 0 && plain[0] != 0x91) {
 				oclog(ws, LOG_DEBUG, "bye packet with payload: %u/%.2x", (unsigned)plain_size, plain[0]);
 				return -1;
 			}

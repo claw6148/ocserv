@@ -105,6 +105,7 @@ typedef struct proc_st {
 	time_t udp_fd_receive_time; /* when the corresponding process has received a UDP fd */
 	
 	time_t conn_time; /* the time the user connected */
+	int session_reuse;
 
 	/* the tun lease this process has */
 	struct tun_lease_st tun_lease;

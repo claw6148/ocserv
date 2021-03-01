@@ -209,6 +209,7 @@ int handle_auth_cookie_req(sec_mod_instance_st * sec_mod_instance, struct proc_s
 			return -1;
 		}
 
+		old_proc->session_reuse = 1;
 		mslog(s, old_proc, LOG_INFO, "disconnecting previous user session due to session re-use");
 
 		/* steal its leases */
@@ -219,6 +220,7 @@ int handle_auth_cookie_req(sec_mod_instance_st * sec_mod_instance, struct proc_s
 		}
 		mslog(s, proc, LOG_DEBUG, "re-using session");
 	} else {
+		proc->session_reuse = 0;
 		mslog(s, proc, LOG_INFO, "new user session");
 	}
 

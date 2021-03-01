@@ -369,6 +369,9 @@ const char* script, *next_script = NULL;
 				setenv("STATS_DURATION", remote, 1);
 			}
 			setenv("REASON", "disconnect", 1);
+			if (proc->session_reuse) {
+				setenv("SESSION_REUSE", "1", 1);
+			}
 		}
 
 		/* export DNS and route info */

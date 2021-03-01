@@ -2478,14 +2478,19 @@ static int parse_data(struct worker_st *ws, uint8_t *buf, size_t buf_size,
 		 * an intention to reconnect (e.g., because network was
 		 * changed). We separate the error codes to ensure we do
 		 * do not interpret the intention incorrectly (see #281). */
-		if (plain_size > 0 && plain[0] == 0xb0) {
-			exit_worker_reason(ws, REASON_USER_DISCONNECT);
-		} else {
-			if (plain_size > 0 && plain[0] != 0x91) {
-				oclog(ws, LOG_DEBUG, "bye packet with payload: %u/%.2x", (unsigned)plain_size, plain[0]);
-				return -1;
+		if (plain_size > 0) {
+			oclog(ws, LOG_DEBUG, "bye packet with payload: %u/%.2x", (unsigned)plain_size, plain[0]);
+			switch(plain[0]) {
+				case 0xb0:
+					exit_worker_reason(ws, REASON_USER_DISCONNECT);
+					break;
+				case 0x91:
+					exit_worker_reason(ws, REASON_TEMP_DISCONNECT);
+					break;
+				default:
+					return -1;
 			}
-
+		} else {
 			exit_worker_reason(ws, REASON_TEMP_DISCONNECT);
 		}
 		break;

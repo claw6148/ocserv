@@ -346,6 +346,7 @@ const char* script, *next_script = NULL;
 		setenv("USER_AGENT", proc->user_agent, 1);
 		setenv("DEVICE_TYPE", proc->device_type, 1);
 		setenv("DEVICE_PLATFORM", proc->device_platform, 1);
+		setenv("UID", proc->uid, 1);
 		if (1) {
 			char sid_str[sizeof(proc->sid) * 2 + 1];
 			for (size_t i = 0; i < sizeof(proc->sid); i++) {

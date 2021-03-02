@@ -256,6 +256,7 @@ message sec_auth_init_msg
 	optional string vhost = 14;
 	required uint64 session_start_time = 15;
 	required bytes hmac = 16;
+	optional string uid = 17;
 }
 
 /* SEC_AUTH_CONT */
@@ -350,6 +351,7 @@ message secm_session_reply_msg
 	optional string user_agent = 12;
 	optional string device_platform = 13;
 	optional string device_type = 14;
+	optional string uid = 15;
 }
 
 /* internal struct */

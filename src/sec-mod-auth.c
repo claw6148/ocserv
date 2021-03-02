@@ -498,6 +498,7 @@ int handle_secm_session_open_cmd(sec_mod_st *sec, int fd, const SecmSessionOpenM
 	rep.user_agent = e->acct_info.user_agent;
 	rep.device_platform = e->acct_info.device_platform;
 	rep.device_type = e->acct_info.device_type;
+	rep.uid = e->acct_info.uid;
 	rep.ip = e->acct_info.remote_ip;
 	rep.tls_auth_ok = e->tls_auth_ok;
 	rep.vhost = e->vhost->name;
@@ -852,8 +853,13 @@ int handle_sec_auth_init(int cfd, sec_mod_st *sec, const SecAuthInitMsg *req, pi
 		strlcpy(e->acct_info.device_type, req->device_type, sizeof(e->acct_info.device_type));
 	}
 
-	if (req->user_agent != NULL)
+	if (req->user_agent != NULL) {
 		strlcpy(e->acct_info.user_agent, req->user_agent, sizeof(e->acct_info.user_agent));
+	}
+
+	if (req->uid != NULL) {
+		strlcpy(e->acct_info.uid, req->uid, sizeof(e->acct_info.uid));
+	}
 
 	// Real user name is retrieved after auth.
 	if (!(req->auth_type & CONFIDENTIAL_USER_NAME_AUTH_TYPES)) {

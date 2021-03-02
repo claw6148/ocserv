@@ -149,6 +149,8 @@ typedef struct proc_st {
 	char user_agent[MAX_AGENT_NAME];
 	char device_type[MAX_DEVICE_TYPE];
 	char device_platform[MAX_DEVICE_PLATFORM];
+	char uid[MAX_UID];
+
 	char tls_ciphersuite[MAX_CIPHERSUITE_NAME];
 	char dtls_ciphersuite[MAX_CIPHERSUITE_NAME];
 	char cstp_compr[8];

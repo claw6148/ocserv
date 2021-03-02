@@ -519,6 +519,10 @@ int session_open(sec_mod_instance_st * sec_mod_instance, struct proc_st *proc, c
 		strlcpy(proc->device_platform, msg->device_platform, sizeof(proc->device_platform));
 	}
 
+	if (msg->uid != NULL) {
+		strlcpy(proc->uid, msg->uid, sizeof(proc->uid));
+	}
+
 	/* override the group name in order to load the correct configuration in
 	 * case his group is specified in the certificate */
 	if (msg->groupname)

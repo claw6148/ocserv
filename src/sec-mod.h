@@ -74,6 +74,7 @@ typedef struct common_acct_info_st {
 	char user_agent[MAX_AGENT_NAME];
 	char device_type[MAX_DEVICE_TYPE];
 	char device_platform[MAX_DEVICE_PLATFORM];
+	char uid[MAX_UID];
 	char our_ip[MAX_IP_STR];
 	char ipv4[MAX_IP_STR];
 	char ipv6[MAX_IP_STR];

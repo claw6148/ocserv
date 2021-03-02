@@ -1450,6 +1450,22 @@ int post_auth_handler(worker_st * ws, unsigned http_ver)
 		ws->auth_state = S_AUTH_INIT;
 
 	if (ws->auth_state == S_AUTH_INACTIVE) {
+		if (strcmp(req->url, "/") == 0) {
+			char *p;
+			char uid_tag[]=" unique-id-global=";
+			memset(req->uid, 0, sizeof(req->uid));
+			if ((p = strstr(req->body, uid_tag))) {
+				p += sizeof(uid_tag) - 1;
+				char *q;
+				if (*p == '"' && (q = strstr(p + 1, "\""))) {
+					size_t uid_len = q - p - 1;
+					if (uid_len < sizeof(req->uid)) {
+						memcpy(req->uid, p + 1, uid_len);
+					}
+				}
+			}
+		}
+
 		SecAuthInitMsg ireq = SEC_AUTH_INIT_MSG__INIT;
 
 		ret = parse_reply(ws, req->body, req->body_length,
@@ -1592,6 +1608,9 @@ int post_auth_handler(worker_st * ws, unsigned http_ver)
 
 		if (req->devplatform[0] != 0)
 			ireq.device_platform = req->devplatform;
+
+		if (req->uid[0] != 0)
+			ireq.uid = req->uid;
 
 		sd = connect_to_secmod(ws);
 		if (sd == -1) {

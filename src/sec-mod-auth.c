@@ -646,7 +646,9 @@ int handle_sec_auth_stats_cmd(sec_mod_st * sec, const CliStatsMsg * req, pid_t p
 
 	e = find_client_entry(sec, req->sid.data);
 	if (e == NULL) {
-		seclog(sec, LOG_INFO, "session stats but with non-existing SID");
+		char sid_str[0x100];
+		bin_to_hex(req->sid.data, req->sid.len, sid_str);
+		seclog(sec, LOG_INFO, "session stats but with non-existing SID(%ld): %s", req->sid.len, sid_str);
 		return -1;
 	}
 

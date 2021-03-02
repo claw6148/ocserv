@@ -232,3 +232,8 @@ int str_replace_str(str_st *str, const str_rep_tab *tab)
 	return 0;
 }
 
+void bin_to_hex(uint8_t *data, size_t data_size, char *str) {
+	for (size_t i = 0; i < data_size; i++) {
+		sprintf(str + (i << 1), "%02x", data[i]);
+	}
+}

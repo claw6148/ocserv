@@ -921,6 +921,11 @@ void vpn_server(struct worker_st *ws)
 		}
 	} while (ws->req.headers_complete == 0);
 
+	if (ws->req.user_agent_type != AGENT_OPENCONNECT_V3 && ws->req.user_agent_type != AGENT_OPENCONNECT && ws->req.user_agent_type != AGENT_ANYCONNECT) {
+		oclog(ws, LOG_ERR, "unknown User-Agent");
+		exit_worker(ws);
+	}
+
 	if (parser.method == HTTP_GET) {
 		oclog(ws, LOG_HTTP_DEBUG, "HTTP GET %s", ws->req.url);
 		fn = http_get_url_handler(ws->req.url);
